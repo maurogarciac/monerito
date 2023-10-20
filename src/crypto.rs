@@ -2,7 +2,7 @@ use serde::{Deserialize};
 
 #[derive(Deserialize, Debug)]
 pub struct Crypto {
-    pub values: Values,
+    pub values: Vec<Values>,
 }
 
 #[derive(Deserialize, Debug)]

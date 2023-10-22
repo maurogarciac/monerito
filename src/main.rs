@@ -1,15 +1,14 @@
 #[macro_use] extern crate rocket;
 
-use value_api_reader::read_orders;
+use std::io::Read;
+use value_api_reader::process_values;
 
 mod value_api_reader;
 mod model;
 
 #[get("/")]
-fn index() -> &'static str {
-    env_logger::init_from_env(
-        env_logger::Env::default().filter_or(env_logger::DEFAULT_FILTER_ENV, "info"));
-    read_values()
+async fn index() -> String {
+    process_values().await.to_string()
 }
 
 

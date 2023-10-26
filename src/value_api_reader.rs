@@ -2,6 +2,7 @@ use rocket::tokio;
 use chrono::{Local, DateTime, Duration};
 use crate::model::crypto::Crypto;
 use crate::model::pesos::Pesos;
+use futures::executor;
 
 const CRYPTO_URL: &str = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD";
 const PESOS_URL: &str = "https://dolarapi.com/v1/dolares.blue";
@@ -20,7 +21,7 @@ async fn read_pesos() -> Pesos {
 }   
 
 
-pub async fn process_values() -> String {
+async fn process_values() -> String {
     let time = Local::now();
     let last_hour = Local::now() - Duration::minutes(60);
     let last_minute = Local::now() - Duration::minutes(1);
@@ -44,4 +45,9 @@ pub async fn process_values() -> String {
     } else {
         "yeah this doesn't work".to_string()
     }
+}
+
+pub fn monero_price() -> String {
+    let v: String = executor::block_on(process_values());
+    v
 }

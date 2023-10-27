@@ -4,7 +4,7 @@ use crate::model::crypto::Crypto;
 use crate::model::pesos::Pesos;
 use futures::executor;
 
-const CRYPTO_URL: &str = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC,USD";
+const CRYPTO_URL: &str = "https://min-api.cryptocompare.com/data/price?fsym=XMR&tsyms=BTC ,USD";
 const PESOS_URL: &str = "https://dolarapi.com/v1/dolares.blue";
 
 async fn read_crypto() -> Crypto {
@@ -41,6 +41,7 @@ async fn process_values() -> String {
 
     return if peso.is_some() && crypto.is_some() {
         value = peso.unwrap().compra as f64 * crypto.unwrap().usd;
+        println!("{}", value);
         value.to_string()
     } else {
         "yeah this doesn't work".to_string()
